@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class student {
+public class Student {
 
   private String id;
   private String name;
@@ -17,6 +17,9 @@ public class student {
   private String address;
   private String age;
   private String gender;
+  private String remark;
+  private boolean isDeleted;
+
 }
 
 
