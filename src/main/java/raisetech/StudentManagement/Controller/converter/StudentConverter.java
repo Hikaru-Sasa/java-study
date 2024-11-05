@@ -5,27 +5,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
-import raisetech.StudentManagement.domain.StudentDtail;
+import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.domain.StudentDetail;
 
 @Component
 
 public class StudentConverter {
 
-  public List<StudentDtail> convertStudentDetails(List<student> students,
+  public List<StudentDetail> convertStudentDetails(List<Student> Students,
       List<StudentsCourses> studentsCourses) {
-    List<StudentDtail> studentDtails = new ArrayList();
-    students.forEach(student -> {
-      StudentDtail studentDtail = new StudentDtail();
-      studentDtail.setStudent(student);
+    List<StudentDetail> studentDetails = new ArrayList<>();
+    Students.forEach(student -> {
+      StudentDetail studentDetail = new StudentDetail();
+      studentDetail.setStudent(student);
 
       List<StudentsCourses> convertStudentCourses = studentsCourses.stream()
-          .filter(studentsCourse -> student.getId().equals(studentsCourse.getStudentId()))
+          .filter(studentsCourse -> Integer.parseInt(student.getId()) == studentsCourse.getStudentId())
           .collect(Collectors.toList());
-      studentDtail.setStudentsCourses(convertStudentCourses);
-      studentDtails.add(studentDtail);
+      studentDetail.setStudentsCourses(convertStudentCourses);
+      studentDetails.add(studentDetail);
     });
-    return studentDtails;
+    return studentDetails;
   }
 
 }

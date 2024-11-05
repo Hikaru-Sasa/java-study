@@ -4,15 +4,14 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
-import raisetech.StudentManagement.repository.StudentRepository;
+import raisetech.StudentManagement.data.Student;
 
 
 @Getter
 @Setter
-public class StudentDtail {
+public class StudentDetail {
 
-  private student student;
+  private Student student;
   private List<StudentsCourses> studentsCourses;
 
 }
