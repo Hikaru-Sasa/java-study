@@ -2,42 +2,42 @@ package raisetech.StudentManagement.Controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.Controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
+import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.service.StudentService;
 
-@RestController
+@Controller
 
 public class StudentController {
 
   private StudentService service;
+  private StudentConverter converter;
 
   @Autowired
-  public StudentController(StudentService service) {
+  public StudentController(StudentService service,StudentConverter converter)
+  {
     this.service = service;
+    this.converter = converter;
   }
 
-  @GetMapping("/students")
-  public List<student> getStudentList() {
-    // リクエストの加工処理
-    return service.searchStudentList();
+  @GetMapping("/studentsList")
+  public String getStudentList(Model model) {
+    List<Student> Students = service.searchStudentList();
+    List<StudentsCourses> studentsCourses = service.searchStudentsCoursesList();
+
+    model.addAttribute("studentsList",converter.convertStudentDetails(Students, studentsCourses));
+    return "studentList";
   }
 
-  @GetMapping("/studentsAge10")
-  public List<student> getStudentListByAge() {
-    return service.searchStudentListByAge();
-  }
 
-  @GetMapping("/students_courses")
+  @GetMapping("/studentsCourseList")
   public List<StudentsCourses> getStudentsCoursesList() {
     return service.searchStudentsCoursesList();
   }
 
-  @GetMapping("/students_coursesMathematics")
-  public List<StudentsCourses> getStudentsCoursesListByCourseName() {
-    return service.searchStudentsCoursesListByCourseName();
-  }
 
 }

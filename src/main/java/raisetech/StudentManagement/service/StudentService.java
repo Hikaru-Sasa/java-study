@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
+import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 @Service
@@ -18,12 +18,12 @@ public class StudentService {
     this.repository = repository;
   }
 
-  public List<student> searchStudentList(){
+  public List<Student> searchStudentList(){
     return repository.search();
   }
 
   // 10歳以上19歳以下を抽出
-  public List<student> searchStudentListByAge() {
+  public List<Student> searchStudentListByAge() {
     return repository.searchByAge(10, 19);
   }
 

@@ -1,12 +1,10 @@
 package raisetech.StudentManagement.repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
+import raisetech.StudentManagement.data.Student;
 
 /**
  * 受講生情報を扱うリポジトリ
@@ -25,10 +23,10 @@ public interface StudentRepository {
    */
 
   @Select("SELECT * FROM students")
-  List<student> search();
+  List<Student> search();
 
   @Select("SELECT * FROM students WHERE age BETWEEN #{minAge} AND #{maxAge}")
-  List<student> searchByAge(int minAge, int maxAge);
+  List<Student> searchByAge(int minAge, int maxAge);
 
   @Select("SELECT * FROM students_courses")
   List<StudentsCourses> searchCourses();
