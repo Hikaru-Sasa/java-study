@@ -13,5 +13,6 @@ public class StudentDetail {
 
   private Student student;
   private List<StudentsCourses> studentsCourses;
+  private StudentsCourses studentsCourse; // StudentsCourses オブジェクトを保持する
 
 }

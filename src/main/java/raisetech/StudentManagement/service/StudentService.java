@@ -35,4 +35,13 @@ public class StudentService {
   public List<StudentsCourses> searchStudentsCoursesListByCourseName() {
     return repository.searchCoursesByCourseName("数学");
   }
+
+  public void saveStudent(Student student) {
+    repository.saveStudent(student);
+  }
+
+  public void saveStudentsCourse(StudentsCourses studentsCourse) {
+    repository.saveCourse(studentsCourse);
+  }
+
 }
