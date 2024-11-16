@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.Controller.converter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -9,13 +10,17 @@ import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.domain.StudentDetail;
 
 @Component
-
 public class StudentConverter {
 
-  public List<StudentDetail> convertStudentDetails(List<Student> Students,
+  public List<StudentDetail> convertStudentDetails(List<Student> students,
       List<StudentsCourses> studentsCourses) {
+
+    if (students == null || students.isEmpty() || studentsCourses == null || studentsCourses.isEmpty()) {
+      return Collections.emptyList();
+    }
+
     List<StudentDetail> studentDetails = new ArrayList<>();
-    Students.forEach(student -> {
+    students.forEach(student -> {
       StudentDetail studentDetail = new StudentDetail();
       studentDetail.setStudent(student);
 
@@ -27,5 +32,4 @@ public class StudentConverter {
     });
     return studentDetails;
   }
-
 }

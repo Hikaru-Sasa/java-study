@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "raisetech.StudentManagement") // パッケージを指定
+
 public class StudentManagementApplication {
 
   private static Map<String, Integer> StudentMap = new HashMap<>();

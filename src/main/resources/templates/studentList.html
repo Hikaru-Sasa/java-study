@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>受講生一覧</h1>
-<table >
+<table>
   <caption>受講生一覧</caption>
   <thead>
   <tr>
@@ -25,6 +25,7 @@
     <th scope="col">年齢</th>
     <th scope="col">性別</th>
     <th scope="col">備考</th>
+    <th scope="col">コース名</th>
   </tr>
   </thead>
   <tbody>
@@ -38,6 +39,7 @@
     <td th:text="${studentDetail.student.age}">20</td>
     <td th:text="${studentDetail.student.gender}">男性</td>
     <td th:text="${studentDetail.student.remark}">NULL</td>
+    <td th:text="${studentDetail.studentsCourses[0].courseName}"></td>
   </tr>
   </tbody>
 </table>
