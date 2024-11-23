@@ -3,8 +3,10 @@ package raisetech.StudentManagement.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 @Service
@@ -22,18 +24,8 @@ public class StudentService {
     return repository.search();
   }
 
-  // 10歳以上19歳以下を抽出
-  public List<Student> searchStudentListByAge() {
-    return repository.searchByAge(10, 19);
-  }
-
   public List<StudentsCourses> searchStudentsCoursesList() {
     return repository.searchCourses();
-  }
-
-  // コースの数学を抽出
-  public List<StudentsCourses> searchStudentsCoursesListByCourseName() {
-    return repository.searchCoursesByCourseName("数学");
   }
 
   public void saveStudent(Student student) {
@@ -43,5 +35,28 @@ public class StudentService {
   public void saveStudentsCourse(StudentsCourses studentsCourse) {
     repository.saveCourse(studentsCourse);
   }
+
+  @Transactional
+  public void registeStudent(StudentDetail studentDetail) {
+    repository.saveStudent(studentDetail.getStudent());
+    repository.saveCourse(studentDetail.getStudentsCourse());
+  }
+
+  public Student findStudentById(String id) {
+    return repository.findStudentById(id);
+  }
+
+  public List<StudentsCourses> findStudentsCoursesByStudentId(String id) {
+    return repository.findStudentsCoursesByStudentId(id);
+  }
+
+  public void updateStudent(Student student) {
+    repository.updateStudent(student);
+  }
+
+  public void updateStudentsCourse(StudentsCourses studentsCourse) {
+    repository.updateStudentsCourse(studentsCourse);
+  }
+
 
 }

@@ -2,11 +2,11 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>受講生登録</title>
+  <title>受講生更新</title>
 </head>
 <body>
-<h1>受講生登録</h1>
-<form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
+<h1>受講生更新</h1>
+<form th:action="@{/updateStudent/{id}(id=${studentDetail.student.id})}" th:object="${studentDetail}" method="post">
   <div>
     <label for="name">名前:</label>
     <input type="text" id="name" th:field="*{student.name}" required />
@@ -47,25 +47,30 @@
     <p th:if="${#fields.hasErrors('student.gender')}" th:errors="*{student.gender}"></p>
   </div>
   <div>
-    <label for="remark">備考:</label> <textarea id="remark" th:field="*{student.remark}"></textarea>
+    <label for="remark">備考:</label>
+    <textarea id="remark" th:field="*{student.remark}"></textarea>
     <p th:if="${#fields.hasErrors('student.remark')}" th:errors="*{student.remark}"></p>
   </div>
-  <div>
-    <label for="courseName">コース名:</label>
-    <input type="text" id="courseName" name="courseName" th:field="*{studentsCourse.courseName}" />
-    <p th:if="${#fields.hasErrors('studentsCourse.courseName')}" th:errors="*{studentsCourse.courseName}"></p>
+  <div th:each="course, iStat : *{studentsCourses}">
+    <input type="hidden" th:field="*{studentsCourses[__${iStat.index}__].id}" />
+    <div>
+      <label th:for="'courseName' + ${iStat.index}">コース名:</label>
+      <input type="text" th:id="'courseName' + ${iStat.index}" th:field="*{studentsCourses[__${iStat.index}__].courseName}" />
+      <p th:if="${#fields.hasErrors('studentsCourses[__${iStat.index}__].courseName')}" th:errors="*{studentsCourses[__${iStat.index}__].courseName}"></p>
+    </div>
+    <div>
+      <label th:for="'startDate' + ${iStat.index}">開始日:</label>
+      <input type="date" th:id="'startDate' + ${iStat.index}" th:field="*{studentsCourses[__${iStat.index}__].startDate}" />
+      <p th:if="${#fields.hasErrors('studentsCourses[__${iStat.index}__].startDate')}" th:errors="*{studentsCourses[__${iStat.index}__].startDate}"></p>
+    </div>
+    <div>
+      <label th:for="'endDate' + ${iStat.index}">終了日:</label>
+      <input type="date" th:id="'endDate' + ${iStat.index}" th:field="*{studentsCourses[__${iStat.index}__].endDate}" />
+      <p th:if="${#fields.hasErrors('studentsCourses[__${iStat.index}__].endDate')}" th:errors="*{studentsCourses[__${iStat.index}__].endDate}"></p>
+    </div>
   </div>
   <div>
-    <label for="startDate">開始日:</label>
-    <input type="date" id="startDate" th:field="*{studentsCourse.startDate}" /> <p th:if="${#fields.hasErrors('studentsCourse.startDate')}" th:errors="*{studentsCourse.startDate}"></p>
-  </div>
-  <div>
-    <label for="endDate">終了日:</label>
-    <input type="date" id="endDate" th:field="*{studentsCourse.endDate}" />
-    <p th:if="${#fields.hasErrors('studentsCourse.endDate')}" th:errors="*{studentsCourse.endDate}"></p>
-  </div>
-  <div>
-    <button type="submit">登録</button>
+    <button type="submit">更新</button>
   </div>
 </form>
 </body>
