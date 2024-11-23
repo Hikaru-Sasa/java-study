@@ -17,9 +17,4 @@ public class StudentManagementApplication {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
 
-
-  //GET POST
-  //GETは取得する、リクエストの結果を受け取る
-  //POSTは情報を与える、渡す
-
 }
