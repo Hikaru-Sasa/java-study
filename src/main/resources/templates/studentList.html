@@ -34,7 +34,8 @@
   <tbody>
   <tr th:each="studentDetail : ${studentsList}">
     <td th:text="${studentDetail.student.id}"></td>
-    <td><a th:href="@{/updateStudent/{id}(id=${studentDetail.student.id})}" th:text="${studentDetail.student.name}"></a></td>
+    <td><a th:href="@{/updateStudent/{id}(id=${studentDetail.student.id})}"
+           th:text="${studentDetail.student.name}"></a></td>
     <td th:text="${studentDetail.student.nameKana}"></td>
     <td th:text="${studentDetail.student.nickname}"></td>
     <td th:text="${studentDetail.student.email}"></td>
@@ -42,9 +43,9 @@
     <td th:text="${studentDetail.student.age}"></td>
     <td th:text="${studentDetail.student.gender}"></td>
     <td th:text="${studentDetail.student.remark}"></td>
-    <td th:each="course : ${studentDetail.studentsCourses}" th:text="${course.courseName}"></td>
-    <td th:each="course : ${studentDetail.studentsCourses}" th:text="${course.startDate}"></td>
-    <td th:each="course : ${studentDetail.studentsCourses}" th:text="${course.endDate}"></td>
+    <td th:text="${studentDetail.studentsCourses[0].courseName}"></td>
+    <td th:text="${studentDetail.studentsCourses[0].startDate}"></td>
+    <td th:text="${studentDetail.studentsCourses[0].endDate}"></td>
   </tr>
   </tbody>
 </table>
