@@ -7,6 +7,7 @@
 <body>
 <h1>受講生更新</h1>
 <form th:action="@{/updateStudent/{id}(id=${studentDetail.student.id})}" th:object="${studentDetail}" method="post">
+  <input type="hidden" th:field="*{student.id}" />
   <div>
     <label for="name">名前:</label>
     <input type="text" id="name" th:field="*{student.name}" required />
@@ -68,6 +69,10 @@
       <input type="date" th:id="'endDate' + ${iStat.index}" th:field="*{studentsCourses[__${iStat.index}__].endDate}" />
       <p th:if="${#fields.hasErrors('studentsCourses[__${iStat.index}__].endDate')}" th:errors="*{studentsCourses[__${iStat.index}__].endDate}"></p>
     </div>
+  </div>
+  <div>
+    <label for="isDeleted">キャンセル:</label>
+    <input type="checkbox" id="isDeleted" th:field="*{student.isDeleted}" />
   </div>
   <div>
     <button type="submit">更新</button>
