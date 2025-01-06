@@ -7,6 +7,7 @@
 <body>
 <h1>受講生更新</h1>
 <form th:action="@{/updateStudent/{id}(id=${studentDetail.student.id})}" th:object="${studentDetail}" method="post">
+  <input type="hidden" th:field="*{student.id}" />
   <div>
     <label for="name">名前:</label>
     <input type="text" id="name" th:field="*{student.name}" required />
