@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="raisetech.StudentManagement.repository.StudentRepository">
+
+  <resultMap id="StudentMap" type="raisetech.StudentManagement.data.Student">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="nameKana" column="name_kana"/>
+    <result property="nickname" column="nickname"/>
+    <result property="email" column="email"/>
+    <result property="address" column="address"/>
+    <result property="age" column="age"/>
+    <result property="gender" column="gender"/>
+    <result property="remark" column="remarks"/>
+    <result property="isDeleted" column="is_deleted"/>
+  </resultMap>
+
+  <resultMap id="StudentsCoursesMap" type="raisetech.StudentManagement.data.StudentsCourses">
+    <id property="id" column="id"/>
+    <result property="studentId" column="student_id"/>
+    <result property="courseName" column="course_name"/>
+    <result property="startDate" column="start_date"/>
+    <result property="endDate" column="end_date"/>
+  </resultMap>
+
+  <select id="findAllStudents" resultMap="StudentMap">
+    SELECT
+    *
+    FROM
+    students
+  </select>
+
+  <select id="findActiveStudents" resultMap="StudentMap">
+    SELECT
+    *
+    FROM
+    students
+    WHERE
+    is_deleted = false
+  </select>
+
+  <select id="findByAge" resultMap="StudentMap">
+    SELECT
+    *
+    FROM
+    students
+    WHERE
+    age BETWEEN #{minAge} AND #{maxAge}
+  </select>
+
+  <select id="findAllCourses" resultMap="StudentsCoursesMap">
+    SELECT
+    *
+    FROM
+    students_courses
+  </select>
+
+  <select id="findByCourseName" resultMap="StudentsCoursesMap">
+    SELECT
+    *
+    FROM
+    students_courses
+    WHERE
+    course_name = #{courseName}
+  </select>
+
+  <select id="findStudentDetails" resultType="java.util.Map">
+    SELECT
+    s.id,
+    s.name,
+    s.name_kana,
+    s.nickname,
+    s.email,
+    s.address,
+    s.age,
+    s.gender,
+    s.remarks,
+    sc.course_name,
+    sc.start_date,
+    sc.end_date
+    FROM
+    students s
+    LEFT JOIN
+    students_courses sc ON s.id = sc.student_id
+  </select>
+
+  <insert id="saveStudent" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO students (
+    name,
+    name_kana,
+    nickname,
+    email,
+    address,
+    age,
+    gender,
+    remarks,
+    is_deleted
+    ) VALUES (
+    #{name},
+    #{nameKana},
+    #{nickname},
+    #{email},
+    #{address},
+    #{age},
+    #{gender},
+    #{remark},
+    false
+    )
+  </insert>
+
+  <insert id="saveCourse" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO students_courses (
+    student_id,
+    course_name,
+    start_date,
+    end_date
+    ) VALUES (
+    #{studentId},
+    #{courseName},
+    #{startDate},
+    #{endDate}
+    )
+  </insert>
+
+  <select id="findStudentById" resultMap="StudentMap">
+    SELECT
+    *
+    FROM
+    students
+    WHERE
+    id = #{id}
+  </select>
+
+  <select id="findStudentsCoursesByStudentId" resultMap="StudentsCoursesMap">
+    SELECT
+    *
+    FROM
+    students_courses
+    WHERE
+    student_id = #{studentId}
+  </select>
+
+  <update id="updateStudent">
+    UPDATE
+    students
+    SET
+    name = #{name},
+    name_kana = #{nameKana},
+    nickname = #{nickname},
+    email = #{email},
+    address = #{address},
+    age = #{age},
+    gender = #{gender},
+    remarks = #{remark},
+    is_deleted = #{isDeleted}
+    WHERE
+    id = #{id}
+  </update>
+
+  <update id="updateStudentsCourse">
+    UPDATE
+    students_courses
+    SET
+    course_name = #{courseName}
+    WHERE
+    id = #{id}
+  </update>
+
+  <delete id="deleteStudentsCourse">
+    DELETE FROM
+    students_courses
+    WHERE
+    id = #{id}
+  </delete>
+
+</mapper>

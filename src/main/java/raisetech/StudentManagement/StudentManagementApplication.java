@@ -1,30 +1,27 @@
+// StudentManagementApplication.java
 package raisetech.StudentManagement;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import raisetech.StudentManagement.data.StudentsCourses;
-import raisetech.StudentManagement.data.student;
-import raisetech.StudentManagement.repository.StudentRepository;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Spring Boot アプリケーションのメインクラス。
+ */
 @SpringBootApplication
 public class StudentManagementApplication {
 
-  private static Map<String, Integer> StudentMap = new HashMap<>();
+  private static final Map<String, Integer> STUDENT_MAP = new HashMap<>();
 
-
+  /**
+   * メインメソッド。
+   *
+   * @param args コマンドライン引数
+   */
   public static void main(String[] args) {
+    // Spring Boot アプリケーションを起動します。
     SpringApplication.run(StudentManagementApplication.class, args);
   }
-
-
-  //GET POST
-  //GETは取得する、リクエストの結果を受け取る
-  //POSTは情報を与える、渡す
-
 }
