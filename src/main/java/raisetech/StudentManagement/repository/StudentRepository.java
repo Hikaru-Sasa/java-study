@@ -1,13 +1,10 @@
+// StudentRepository.java
 package raisetech.StudentManagement.repository;
 
 import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.data.Student;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +22,6 @@ public interface StudentRepository {
    *
    * @return 全権検索した受講生情報の一覧
    */
-  @Select("SELECT * FROM students")
   List<Student> findAllStudents();
 
   /**
@@ -33,7 +29,6 @@ public interface StudentRepository {
    *
    * @return 削除されていない受講生情報の一覧
    */
-  @Select("SELECT * FROM students WHERE is_deleted = false")
   List<Student> findActiveStudents();
 
   /**
@@ -43,15 +38,13 @@ public interface StudentRepository {
    * @param maxAge 最大年齢
    * @return 指定された年齢範囲の受講生情報の一覧
    */
-  @Select("SELECT * FROM students WHERE age BETWEEN #{minAge} AND #{maxAge}")
-  List<Student> findByAge(int minAge, int maxAge);
+  List<Student> findByAge(@Param("minAge") int minAge, @Param("maxAge") int maxAge);
 
   /**
    * 全ての受講コースを検索します。
    *
    * @return 全ての受講コース情報の一覧
    */
-  @Select("SELECT * FROM students_courses")
   List<StudentsCourses> findAllCourses();
 
   /**
@@ -60,7 +53,6 @@ public interface StudentRepository {
    * @param courseName コース名
    * @return 指定されたコース名の受講コース情報の一覧
    */
-  @Select("SELECT * FROM students_courses WHERE course_name = #{courseName}")
   List<StudentsCourses> findByCourseName(String courseName);
 
   /**
@@ -68,9 +60,6 @@ public interface StudentRepository {
    *
    * @return 受講生情報と受講コース情報を結合した一覧
    */
-  @Select("SELECT s.id, s.name, s.name_kana, s.nickname, s.email, s.address, s.age, s.gender, s.remarks, sc.course_name, sc.start_date, sc.end_date "
-      + "FROM students s "
-      + "LEFT JOIN students_courses sc ON s.id = sc.student_id")
   List<Map<String, Object>> findStudentDetails();
 
   /**
@@ -78,9 +67,6 @@ public interface StudentRepository {
    *
    * @param student 登録する受講生情報
    */
-  @Insert("INSERT INTO students(name,name_kana,nickname,email,address,age,gender,remarks,is_deleted)"
-      + "VALUES (#{name}, #{nameKana}, #{nickname}, #{email}, #{address}, #{age}, #{gender}, #{remark}, false)")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
   void saveStudent(Student student);
 
   /**
@@ -88,9 +74,6 @@ public interface StudentRepository {
    *
    * @param studentsCourse 登録する受講コース情報
    */
-  @Insert("INSERT INTO students_courses (student_id, course_name, start_date, end_date) "
-      + "VALUES (#{studentId}, #{courseName}, #{startDate}, #{endDate})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
   void saveCourse(StudentsCourses studentsCourse);
 
   /**
@@ -99,7 +82,6 @@ public interface StudentRepository {
    * @param id 受講生 ID
    * @return 指定された ID の受講生情報
    */
-  @Select("SELECT * FROM students WHERE id = #{id}")
   Student findStudentById(String id);
 
   /**
@@ -108,7 +90,6 @@ public interface StudentRepository {
    * @param studentId 受講生 ID
    * @return 指定された受講生 ID の受講コース情報の一覧
    */
-  @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
   List<StudentsCourses> findStudentsCoursesByStudentId(String studentId);
 
   /**
@@ -116,8 +97,6 @@ public interface StudentRepository {
    *
    * @param student 更新する受講生情報
    */
-  @Update(
-      "UPDATE students SET name = #{name}, name_kana = #{nameKana}, nickname = #{nickname}, email = #{email}, address = #{address}, age = #{age}, gender = #{gender}, remarks = #{remark}, is_deleted = #{isDeleted} WHERE id = #{id}")
   void updateStudent(Student student);
 
   /**
@@ -125,7 +104,6 @@ public interface StudentRepository {
    *
    * @param studentsCourse 更新する受講コース情報
    */
-  @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
   void updateStudentsCourse(StudentsCourses studentsCourse);
 
   /**
@@ -133,6 +111,5 @@ public interface StudentRepository {
    *
    * @param id 削除する受講コースの ID
    */
-  @Delete("DELETE FROM students_courses WHERE id = #{id}")
   void deleteStudentsCourse(int id);
 }
