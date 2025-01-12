@@ -1,5 +1,4 @@
 // StudentController.java
-// 2025/0106 第21回演習課題
 package raisetech.StudentManagement.Controller;
 
 import raisetech.StudentManagement.Controller.converter.StudentConverter;
