@@ -1,6 +1,10 @@
 // StudentDetail.java
 package raisetech.StudentManagement.domain;
 
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.data.Student;
 import lombok.Getter;
@@ -13,12 +17,17 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentDetail {
 
-  /**S
+  @Valid
+  /**
    * 受講生情報
    */
   private Student student;
+
+  @Valid
   /**
    * 受講コース情報
    */

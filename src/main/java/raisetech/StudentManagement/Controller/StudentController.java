@@ -1,10 +1,17 @@
 // StudentController.java
 package raisetech.StudentManagement.Controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import raisetech.StudentManagement.Controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +22,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 /**
  * 受講生の検索や登録、更新などを行う REST API として実行されるコントローラー。
  */
+@Validated
 @RestController
 public class StudentController {
 
@@ -37,8 +44,9 @@ public class StudentController {
    * @return アクティブな受講生リスト
    */
   @GetMapping("/studentsList")
-  public List<StudentDetail> getStudentList() {
-    return service.searchActiveStudentList();
+  public List<StudentDetail> getStudentList() throws TestException {
+    throw new TestException("現在このAPIは利用できません。URLは「studentList」でなく「Students」を利用してください。");
+    // return service.searchActiveStudentList();
   }
 
   /**
@@ -48,7 +56,8 @@ public class StudentController {
    * @return 受講生情報
    */
   @GetMapping("/student/{id}")
-  public StudentDetail getStudent(@PathVariable String id) {
+  public StudentDetail getStudent(
+      @PathVariable @NotBlank @Pattern(regexp = "\\d+$") String id) {
     // 指定された ID の受講生情報を取得します。
     return service.searchStudent(id);
   }
@@ -89,7 +98,7 @@ public class StudentController {
    * @return 登録結果
    */
   @PostMapping("/registerStudent")
-  public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
+  public ResponseEntity<StudentDetail> registerStudent(@RequestBody @Valid StudentDetail studentDetail) {
     // 受講生情報を登録します。
     StudentDetail responseStudentDetail = service.registerStudent(studentDetail);
     // 登録結果を返します。
@@ -139,4 +148,10 @@ public class StudentController {
     // 更新結果を返します。
     return ResponseEntity.ok("更新処理が成功しました");
   }
+
+@ExceptionHandler(TestException.class)
+  public ResponseEntity<String> handleTestException(TestException ex){
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+}
+
 }
