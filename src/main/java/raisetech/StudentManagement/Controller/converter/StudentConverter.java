@@ -1,8 +1,4 @@
-// StudentConverter.java
-// 2025/0106 第21回演習課題
-// 検索の部分を中心にリファクタリングを行いましょう
-// 動作確認をしておきましょう
-// 時間がある方は、他の部分もリファクタリングを行いましょう
+
 package raisetech.StudentManagement.Controller.converter;
 
 import raisetech.StudentManagement.data.StudentsCourses;
