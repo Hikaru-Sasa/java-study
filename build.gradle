@@ -15,7 +15,7 @@ java {
 }
 
 configurations {
-	compileOnly{
+	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
@@ -43,6 +43,12 @@ dependencies {
 
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// Jakarta Validation API
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// SpringDoc (OpenAPI/Swagger)
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
